@@ -101,7 +101,7 @@ export default {
     },
     async upvote (id, index) {
       try {
-        const resp = await axios.get('/topic/upvote/' + index) 
+        const resp = await axios.get('/topic/upvote/' + id) 
         if(resp && resp.status === 200) {
           const data = resp.data
           if(data.success) {
