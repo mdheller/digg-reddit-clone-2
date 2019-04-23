@@ -72,14 +72,16 @@ export default {
         const resp = await axios.post('/create/topic', this.topic)
         if(resp && resp.status === 200) {
             // if topic success to submit
+            // empty form content
             this.topic = { title: '', content: '' }
+            const data = resp.data
+            if(data.success) this.topics.push(data.result)
+            else alert('there something a wrong')
         }
       } catch (error) {
-          
+          alert('getting error from back-end')
       }
-
-      // this.topics.push(Object.assign({ upvote: 0, downvote: 0 }, this.topic))
-      // empty form content
+      
       
     },
     sorting () {
