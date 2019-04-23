@@ -74,9 +74,14 @@ export default {
     sorting () {
       // orderBy upvote and sort desc
       this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
+    },
+    upvote (index) {
+      this.topics[index].upvote++
+      this.debounced()
     }
   },
   created () {
+    // debounce using lodash for waiting user finish hit the button
     this.debounced = _.debounce(this.sorting, 2000)
   }
 }
