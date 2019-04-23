@@ -29,6 +29,11 @@ export default {
       topics: []
     }
   },
+  computed: {
+    gettopic (){
+      return this.topics.slice(0, 20)
+    }
+  },
   methods: {
     tosubmit () {
       // check if topic title is empty
