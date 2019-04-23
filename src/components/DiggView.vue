@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+import _ from 'lodash'
 export default {
   data () {
     return {
@@ -69,7 +70,14 @@ export default {
       this.topics.push(Object.assign({ upvote: 0, downvote: 0 }, this.topic))
       // empty form content
       this.topic = { title: '', content: '' }
+    },
+    sorting () {
+      // orderBy upvote and sort desc
+      this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
     }
+  },
+  created () {
+    this.debounced = _.debounce(this.sorting, 2000)
   }
 }
 </script>
