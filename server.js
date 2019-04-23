@@ -4,13 +4,15 @@ const bodyparser = require('body-parser')
 const _ = require('lodash')
 const app = express();
 var storage = []
+var idcounter = 0
 app.use(serveStatic(__dirname + "/dist"));
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
 app.post('/create/topic', (req, res) => {
     const body = req.body
     if(body && typeof body.title !== 'undefined' && typeof body.content !== 'undefined') {
-        const result = Object.assign({ upvote: 0, downvote: 0 }, body)
+        idcounter++
+        const result = Object.assign({ upvote: 0, downvote: 0, id: idcounter}, body)
         storage.push(result)   
         return res.json({success: true, result: result})
     }
