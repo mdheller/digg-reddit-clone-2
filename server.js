@@ -50,5 +50,8 @@ app.get('/get-list/topic', (req, res) => {
     const result = storage.slice(0, 20)
     res.json({success: true, result: result})
 })
-var port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 app.listen(port);
+
+// eslint-disable-next-line
+console.log('application serve on port' + port)
