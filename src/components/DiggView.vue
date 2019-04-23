@@ -32,6 +32,7 @@
 </template>
 <script>
 import _ from 'lodash'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -55,7 +56,7 @@ export default {
         this.topic.content = content
       }
     },  
-    tosubmit () {
+    async tosubmit () {
       // check if topic title is empty
       if(this.topic.title.length === 0) {
         alert('title can`t empty')
@@ -67,9 +68,19 @@ export default {
         return
       }
       // push topic list
-      this.topics.push(Object.assign({ upvote: 0, downvote: 0 }, this.topic))
+      try {
+        const resp = await axios.post('/create/topic', this.topic)
+        if(resp && resp.status === 200) {
+            // if topic success to submit
+            this.topic = { title: '', content: '' }
+        }
+      } catch (error) {
+          
+      }
+
+      // this.topics.push(Object.assign({ upvote: 0, downvote: 0 }, this.topic))
       // empty form content
-      this.topic = { title: '', content: '' }
+      
     },
     sorting () {
       // orderBy upvote and sort desc
