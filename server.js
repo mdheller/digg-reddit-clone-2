@@ -10,8 +10,26 @@ app.post('/create/topic', (req, res) => {
     const body = req.body
     if(body && typeof body.title !== 'undefined' && typeof body.content !== 'undefined') {
         const result = Object.assign({ upvote: 0, downvote: 0 }, body)
-        storage.push(result)
+        storage.push(result)   
         return res.json({success: true, result: result})
+    }
+    res.json({success: false, result: null})
+})
+app.get('/topic/upvote/:index', (req, res) => {
+    // check item index has in storage
+    if(storage[req.params.index]) {
+        // counter upvote
+        storage[req.params.index].upvote++
+        return res.json({success: true,result: storage[req.params.index]})
+    }
+    res.json({success: false, result: null})
+})
+app.get('/topic/downvote/:index', (req, res) => {
+    
+    if(storage[req.params.index]) {
+        // counter downvote
+        storage[req.params.index].downvote++
+        return res.json({success: true,result: storage[req.params.index]})
     }
     res.json({success: false, result: null})
 })
