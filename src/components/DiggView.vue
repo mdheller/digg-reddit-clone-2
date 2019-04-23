@@ -21,7 +21,7 @@
                                 <h4 class="list-group-item-heading">{{item.title}}</h4>
                                 <p class="list-group-item-text">{{item.content}}</p>
                                 <button style="margin: 5px" class="btn btn-default" type="submit" @click="upvote(item.id, i)"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
-                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.downvote++"><i class="glyphicon glyphicon-triangle-bottom"></i> {{item.downvote}}</button>
+                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="downvote(item.id, i)"><i class="glyphicon glyphicon-triangle-bottom"></i> {{item.downvote}}</button>
                             </div>
                         </div>
                     </div>
@@ -89,14 +89,11 @@ export default {
         if(resp && resp.status === 200) {
           const data = resp.data
           if(data.success) {
-            // sorting when back-end has been sort
-            // sorting alway same if never change on outside
-            this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
-          }
-          else alert('there something a wrong')
+            this.topics = data.result
+          } else alert('there something a wrong')
         }
       } catch (error) {
-          
+        alert('getting error from back-end')
       }
     },
     async upvote (id, index) {
@@ -106,13 +103,28 @@ export default {
           const data = resp.data
           if(data.success) {
             // update upvote number
+            this.debounced()
             this.topics[index].upvote = data.result.upvote
-            // this.debounced()
           } else alert('there something a wrong')
         }
       } catch (error) {
           alert('getting error from back-end')
       }
+    },
+    async downvote (id, index) {
+       try {
+        const resp = await axios.get('/topic/downvote/' + id) 
+        if(resp && resp.status === 200) {
+          const data = resp.data
+          if(data.success) {
+            // update upvote number
+            this.debounced()
+            this.topics[index].downvote = data.result.downvote
+          } else alert('there something a wrong')
+        }
+      } catch (error) {
+          alert('getting error from back-end')
+      } 
     }
   },
   created () {
