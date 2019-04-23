@@ -8,7 +8,7 @@ In this project, I'm using lodash to debounce or waiting for user to stop hittin
 This test project build on top of vuejs framework. That we know, vuejs more easy to build front-end website.
 
 ### Back-end
-Back-end nodejs build on top of expressjs framework,that more suitable to make back-end for website of any application.
+Back-end nodejs build on top of expressjs framework,that more suitable to make back-end (or API) for website or any application.
 
 ## Project setup 
  - npm install
