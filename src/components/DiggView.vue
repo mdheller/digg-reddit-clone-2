@@ -10,7 +10,7 @@
                         <div class="form-group">
                             <textarea class="form-control" rows="5" placeholder="topic content" v-model="topic.content"></textarea>
                         </div>
-                        <span>0 / 255</span>
+                        <span>{{topic.content.length}} / 255</span>
                         <button class="btn btn-success pull-right" @click="tosubmit">Create Topic</button>
                     </div>
                 </div>
