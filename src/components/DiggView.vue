@@ -8,7 +8,7 @@
                             <input type="text" class="form-control" placeholder="title" v-model="topic.title">
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" rows="5" placeholder="topic content" v-model="topic.content"></textarea>
+                            <textarea class="form-control" rows="5" placeholder="topic content" @keyup="checklength" v-model="topic.content"></textarea>
                         </div>
                         <span>{{topic.content.length}} / 255</span>
                         <button class="btn btn-success pull-right" @click="tosubmit">Create Topic</button>
@@ -44,6 +44,16 @@ export default {
     }
   },
   methods: {
+    // check if text length more than 255
+    checklength () {
+      const size = this.topic.content.length
+      // if counted more than 225
+      if(size > 255) {
+        // get fist 255 character
+        let content = this.topic.content.slice(0, 255)
+        this.topic.content = content
+      }
+    },  
     tosubmit () {
       // check if topic title is empty
       if(this.topic.title.length === 0) {
