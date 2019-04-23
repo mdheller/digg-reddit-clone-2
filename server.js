@@ -18,21 +18,23 @@ app.post('/create/topic', (req, res) => {
     }
     res.json({success: false, result: null})
 })
-app.get('/topic/upvote/:index', (req, res) => {
+app.get('/topic/upvote/:id', (req, res) => {
     // check item index has in storage
-    if(storage[req.params.index]) {
+    const index = storage.map(e => {return e.id}).indexOf(req.params.id)
+    if(index >= 0 && storage[index]) {
         // counter upvote
-        storage[req.params.index].upvote++
-        return res.json({success: true,result: storage[req.params.index]})
+        storage[index].upvote++
+        return res.json({success: true,result: storage[index]})
     }
     res.json({success: false, result: null})
 })
-app.get('/topic/downvote/:index', (req, res) => {
+app.get('/topic/downvote/:id', (req, res) => {
     // check item index has in storage
-    if(storage[req.params.index]) {
+    const index = storage.map(e => {return e.id}).indexOf(req.params.id)
+    if(index >= 0 && storage[index]) {
         // counter downvote
-        storage[req.params.index].downvote++
-        return res.json({success: true,result: storage[req.params.index]})
+        storage[index].downvote++
+        return res.json({success: true,result: storage[index]})
     }
     res.json({success: false, result: null})
 })
