@@ -125,9 +125,24 @@ export default {
       } catch (error) {
           alert('getting error from back-end')
       } 
+    },
+    async getLastUpdate () {
+      try {
+        const resp = await axios.get('/get-list/topic') 
+        if(resp && resp.status === 200) {
+          const data = resp.data
+          if(data.success) {
+            // update upvote number
+            this.topics = data.result
+          } else alert('there something a wrong')
+        }
+      } catch (error) {
+        alert('getting error from back-end')
+      }
     }
   },
   created () {
+    this.getLastUpdate()
     // debounce using lodash for waiting user finish hit the button
     this.debounced = _.debounce(this.sorting, 2000)
   }
