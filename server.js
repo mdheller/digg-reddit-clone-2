@@ -34,9 +34,14 @@ app.get('/topic/downvote/:index', (req, res) => {
     }
     res.json({success: false, result: null})
 })
+// when dobouncer is called on frond-end
 app.get('/topic/sorting', (req,res) =>{
     storage = _.orderBy(storage, ['upvote'], ['desc'])
     res.json({success: true})
+})
+app.get('/get-list/topic', (req, res) => {
+    const result = storage.slice(0, 20)
+    res.json({success: true, result: result})
 })
 var port = process.env.PORT || 5000;
 app.listen(port);
