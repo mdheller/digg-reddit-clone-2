@@ -81,16 +81,27 @@ export default {
       } catch (error) {
           alert('getting error from back-end')
       }
-      
-      
     },
     sorting () {
       // orderBy upvote and sort desc
       this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
     },
-    upvote (index) {
-      this.topics[index].upvote++
-      this.debounced()
+    async upvote (index) {
+      try {
+        const resp = await axios.get('/topic/upvote/' + index) 
+        if(resp && resp.status === 200) {
+          const data = resp.data
+          if(data.success) {
+            // update upvote number
+            this.topics[index].upvote = data.result.upvote
+            this.debounced()
+          }
+          else alert('there something a wrong')
+
+        }
+      } catch (error) {
+          
+      }
     }
   },
   created () {
