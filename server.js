@@ -2,12 +2,14 @@ var express = require('express');
 var serveStatic = require('serve-static');
 const bodyparser = require('body-parser')
 const _ = require('lodash')
+const cors = require('cors')
 const app = express();
 var storage = []
 var idcounter = 0
 app.use(serveStatic(__dirname + "/dist"));
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
+app.use(cors())
 app.post('/create/topic', (req, res) => {
     const body = req.body
     if(body && typeof body.title !== 'undefined' && typeof body.content !== 'undefined') {
@@ -20,7 +22,7 @@ app.post('/create/topic', (req, res) => {
 })
 app.get('/topic/upvote/:id', (req, res) => {
     // check item index has in storage
-    const index = storage.map(e => {return e.id}).indexOf(req.params.id)
+    const index = storage.map(e => {return e.id;}).indexOf(parseInt(req.params.id))
     if(index >= 0 && storage[index]) {
         // counter upvote
         storage[index].upvote++
@@ -30,7 +32,7 @@ app.get('/topic/upvote/:id', (req, res) => {
 })
 app.get('/topic/downvote/:id', (req, res) => {
     // check item index has in storage
-    const index = storage.map(e => {return e.id}).indexOf(req.params.id)
+    const index = storage.map(e => {return e.id}).indexOf(parseInt(req.params.id))
     if(index >= 0 && storage[index]) {
         // counter downvote
         storage[index].downvote++

@@ -20,7 +20,7 @@
                             <div class="list-group-item" v-for="(item, i) in gettopic" :key="i">
                                 <h4 class="list-group-item-heading">{{item.title}}</h4>
                                 <p class="list-group-item-text">{{item.content}}</p>
-                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="upvote(i)"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
+                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="upvote(item.id)"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
                                 <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.downvote++"><i class="glyphicon glyphicon-triangle-bottom"></i> {{item.downvote}}</button>
                             </div>
                         </div>
@@ -82,7 +82,7 @@ export default {
         alert('getting error from back-end')
       }
     },
-    sorting () {
+    async sorting () {
       // orderBy upvote and sort desc
       try {
         const resp = await axios.get('/topic/sorting')
@@ -107,7 +107,7 @@ export default {
           if(data.success) {
             // update upvote number
             this.topics[index].upvote = data.result.upvote
-            this.debounced()
+            // this.debounced()
           }
           else alert('there something a wrong')
 
