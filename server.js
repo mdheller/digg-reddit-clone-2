@@ -43,7 +43,8 @@ app.get('/topic/downvote/:id', (req, res) => {
 // when dobouncer is called on frond-end
 app.get('/topic/sorting', (req,res) =>{
     storage = _.orderBy(storage, ['upvote'], ['desc'])
-    res.json({success: true})
+    const result = storage.slice(0, 20)
+    res.json({success: true, result: result})
 })
 app.get('/get-list/topic', (req, res) => {
     const result = storage.slice(0, 20)
