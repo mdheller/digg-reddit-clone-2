@@ -20,3 +20,10 @@ Back-end nodejs build on top of expressjs framework,that more suitable to make b
  If you have to install all module, run `` npm run build `` to build all vue resource to static resource. all static resource locate in dist path/folder.
 
  And the last command is `` npm run start `` to start serve all resource and API (application programing interface).
+
+### build for server or hosting
+same as local serve, but have some additional action.
+- delete package-lock.json and yarn.lock
+- replace package.json with example.package.json or just rename example.package.json to package.json
+- on `.gitignore` delete text dist or ./dist
+- public path, src path, babel config not need on production serve, you can delete all of that.
