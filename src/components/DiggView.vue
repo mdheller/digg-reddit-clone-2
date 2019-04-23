@@ -20,7 +20,7 @@
                             <div class="list-group-item" v-for="(item, i) in gettopic" :key="i">
                                 <h4 class="list-group-item-heading">{{item.title}}</h4>
                                 <p class="list-group-item-text">{{item.content}}</p>
-                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="upvote(item.id)"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
+                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="upvote(item.id, i)"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
                                 <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.downvote++"><i class="glyphicon glyphicon-triangle-bottom"></i> {{item.downvote}}</button>
                             </div>
                         </div>
@@ -99,7 +99,7 @@ export default {
           
       }
     },
-    async upvote (index) {
+    async upvote (id, index) {
       try {
         const resp = await axios.get('/topic/upvote/' + index) 
         if(resp && resp.status === 200) {
@@ -108,9 +108,7 @@ export default {
             // update upvote number
             this.topics[index].upvote = data.result.upvote
             // this.debounced()
-          }
-          else alert('there something a wrong')
-
+          } else alert('there something a wrong')
         }
       } catch (error) {
           alert('getting error from back-end')
