@@ -1,8 +1,9 @@
 var express = require('express');
 var serveStatic = require('serve-static');
 const bodyparser = require('body-parser')
+const _ = require('lodash')
 const app = express();
-const storage = []
+var storage = []
 app.use(serveStatic(__dirname + "/dist"));
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
@@ -25,13 +26,17 @@ app.get('/topic/upvote/:index', (req, res) => {
     res.json({success: false, result: null})
 })
 app.get('/topic/downvote/:index', (req, res) => {
-    
+    // check item index has in storage
     if(storage[req.params.index]) {
         // counter downvote
         storage[req.params.index].downvote++
         return res.json({success: true,result: storage[req.params.index]})
     }
     res.json({success: false, result: null})
+})
+app.get('/topic/sorting', (req,res) =>{
+    storage = _.orderBy(storage, ['upvote'], ['desc'])
+    res.json({success: true})
 })
 var port = process.env.PORT || 5000;
 app.listen(port);
