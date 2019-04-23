@@ -71,20 +71,33 @@ export default {
       try {
         const resp = await axios.post('/create/topic', this.topic)
         if(resp && resp.status === 200) {
-            // if topic success to submit
-            // empty form content
-            this.topic = { title: '', content: '' }
-            const data = resp.data
-            if(data.success) this.topics.push(data.result)
-            else alert('there something a wrong')
+          // if topic success to submit
+          // empty form content
+          this.topic = { title: '', content: '' }
+          const data = resp.data
+          if(data.success) this.topics.push(data.result)
+          else alert('there something a wrong')
         }
       } catch (error) {
-          alert('getting error from back-end')
+        alert('getting error from back-end')
       }
     },
     sorting () {
       // orderBy upvote and sort desc
-      this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
+      try {
+        const resp = await axios.get('/topic/sorting')
+        if(resp && resp.status === 200) {
+          const data = resp.data
+          if(data.success) {
+            // sorting when back-end has been sort
+            // sorting alway same if never change on outside
+            this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
+          }
+          else alert('there something a wrong')
+        }
+      } catch (error) {
+          
+      }
     },
     async upvote (index) {
       try {
