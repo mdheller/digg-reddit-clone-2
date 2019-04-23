@@ -100,7 +100,7 @@ export default {
 
         }
       } catch (error) {
-          
+          alert('getting error from back-end')
       }
     }
   },
